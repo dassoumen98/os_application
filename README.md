@@ -153,3 +153,107 @@ while True:
     data= s.recvfrom (1024)
     print (data [0].decode('utf-8'))
 ```
+
+```py
+Socket programming using TCP :
+
+Server:
+
+#echo server
+
+import socket
+
+HOST="192.168.60.141"
+
+PORT=64431
+
+with socket.socket(socket.AF_INET, socket. SOCK STREAM) as s:
+
+s.bind((HOST, PORT))
+
+s.listen()
+
+conn, addr=s.accept()
+
+with conn:
+
+print (f"connected by (addr)")
+
+while True:
+
+data=conn.recv(1024)
+
+if data:
+
+conn.sendall (data)
+
+Client:
+
+#echo client
+
+import socket
+
+HOST="192.168.60.141"
+
+PORT=64431
+
+with socket.socket (socket.AF_INET, socket.SOCK_STREAM) as s:
+
+s.connect ((HOST, PORT))
+
+while True:
+
+dl=input ("Enter your message")
+
+s.sendall (dl.encode ('utf-8'))
+
+data=s.recv(1024)
+
+print (data.decode('utf-8'))
+```
+
+```py
+# chat server
+
+import socket
+
+HOST = "192.168.60.141"
+PORT = 64431
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind((HOST, PORT))
+    s.listen()
+    print(f"Server listening on {HOST}:{PORT}")
+    
+    conn, addr = s.accept()
+    with conn:
+        print(f"Connected by {addr}")
+        while True:
+            data = conn.recv(1024)
+            if not data:
+                break
+            print("Client:", data.decode("utf-8"))
+            reply = input("Enter your reply: ")
+            conn.sendall(reply.encode('utf-8'))
+
+# echo client
+
+import socket
+
+HOST = "192.168.60.141"
+PORT = 64431
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.connect((HOST, PORT))
+    print(f"Connected to server at {HOST}:{PORT}")
+    
+    while True:
+        message = input("Enter your message: ")
+        s.sendall(message.encode('utf-8'))
+        data = s.recv(1024)
+        if not data:
+            break
+        print("Server:", data.decode('utf-8'))
+
+
+```
